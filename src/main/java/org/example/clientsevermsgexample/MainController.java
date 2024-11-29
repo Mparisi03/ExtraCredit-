@@ -7,9 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.DataInputStream;
@@ -38,6 +40,9 @@ public class MainController implements Initializable {
                 "119",     // nntp (news)
                 "161"      // snmp);
         );
+
+
+
     }
 
     @FXML
@@ -59,11 +64,22 @@ public class MainController implements Initializable {
 
     @FXML
     private TextField urlName;
-
+    @FXML
     Socket socket1;
-
+    @FXML
     Label lb122, lb12;
+    @FXML
     TextField msgText;
+
+    @FXML
+    private Button user1_client;
+
+    @FXML
+    private Button user2_server;
+
+    private ClientView clientViewr;
+
+    private ServerView serverViewr;
 
     @FXML
     void checkConnection(ActionEvent event) {
@@ -166,7 +182,7 @@ public class MainController implements Initializable {
 
     private void updateServer(String message) {
         // Run on the UI thread
-        javafx.application.Platform.runLater(() -> lb12.setText(message + "\n"));
+        javafx.application.Platform.runLater(() -> test_lbl.setText(message + "\n"));
     }
 
 
@@ -228,6 +244,40 @@ public class MainController implements Initializable {
     private void updateTextClient(String message) {
         // Run on the UI thread
         javafx.application.Platform.runLater(() -> lb122.setText(message + "\n"));
+    }
+
+    @FXML
+    void user1(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/clientsevermsgexample/client-view.fxml"));
+            Parent clientView = loader.load();
+
+            Stage clientStage = new Stage();
+            clientStage.setScene(new Scene(clientView));
+            clientStage.setTitle("Client Window");
+            clientStage.show();
+
+            System.out.println("User 1 button pressed");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void user2(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/clientsevermsgexample/server-view.fxml"));
+            Parent clientView = loader.load();
+
+            Stage clientStage = new Stage();
+            clientStage.setScene(new Scene(clientView));
+            clientStage.setTitle("Server Window");
+            clientStage.show();
+
+            System.out.println("User 2 button pressed");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
